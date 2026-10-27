@@ -34,7 +34,7 @@ sudo named-checkzone empresa.local /var/lib/bind/db.empresa.local
 sudo systemctl restart bind9
 ````
 
-https://img1.png/
+![Captura 1 - Maestro Ubuntu](img1.png)
 
 Explicación: En esta captura se observa la directiva dnssec-policy default y el allow-transfer restringido. Los comandos de chequeo no devuelven error lo que confirma que la sintaxis es correcta.
 
@@ -45,7 +45,7 @@ Le indico la IP del maestro para que descargue la zona firmada.
 cat /etc/bind/named.conf.local
 sudo systemctl restart bind9
 ls -l /var/cache/bind/
-https://img2.png/
+![Captura 2 - Esclavo Debian](img2.png)
 ```
 
 Explicación: Se puede ver cómo el esclavo ha descargado el archivo .signed lo que demuestra que la transferencia AXFR se ha completado correctamente.
@@ -56,7 +56,7 @@ Uso la máquina Debian como cliente para consultar al maestro pidiendo el flag d
 ```bash
 
 dig @192.168.6.25 www.empresa.local +dnssec
-https://img3.png/
+![Captura 3 - Cliente dig](img3.png) 
 ```
 
 Explicación: En la sección ANSWER se aprecia el registro RRSIG. Esta es la firma digital que garantiza que la respuesta proviene del servidor legítimo y no ha sido manipulada.
@@ -66,7 +66,7 @@ Compruebo que el proceso de firma ha terminado correctamente.
 
 ```bash
 sudo rndc signing -list empresa.local
-https://img4.png/
+![Captura 4 - Verificación rndc](img4.png)
 ```
 
 Explicación: El mensaje Done signing confirma que BIND ha generado las claves ZSK y KSK y ha firmado la zona sin errores.
