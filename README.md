@@ -113,16 +113,33 @@ El comando no garantiza por sí solo que todas las claves se hayan generado corr
 
 Si se necesita comprobar las claves DNSSEC disponibles, se pueden revisar los archivos de claves y los registros de la zona según la configuración utilizada.
 
-## 5. Conclusión
+## 5. Cifrado del tráfico DNS
+
+DNSSEC garantiza la autenticidad e integridad de los registros DNS mediante firmas digitales, pero no cifra las consultas ni las respuestas. Por tanto, el tráfico DNS tradicional puede seguir siendo visible para terceros.
+
+Para cifrar las comunicaciones entre el cliente y el servidor resolver se pueden utilizar tecnologías como:
+
+- **DNS over TLS (DoT):** cifra las consultas DNS mediante TLS, normalmente utilizando el puerto 853.
+- **DNS over HTTPS (DoH):** transmite las consultas DNS cifradas mediante HTTPS, normalmente utilizando el puerto 443.
+
+Estas tecnologías protegen la confidencialidad del tráfico entre los extremos que establecen la conexión cifrada. No sustituyen a DNSSEC, ya que sus objetivos son diferentes.
+
+En esta práctica se ha trabajado principalmente la firma DNSSEC, la configuración de los servidores autoritativos y la restricción de las transferencias de zona. No se ha documentado la implementación de DoT o DoH, por lo que no se afirma que el tráfico DNS esté cifrado.
+
+## 6. Limitaciones y comprobaciones de DNSSEC
+
+La presencia de registros RRSIG en una respuesta DNS demuestra que se está proporcionando información de firma, pero no garantiza por sí sola que la respuesta haya sido validada correctamente.
+
+Para comprobar la autenticidad de los datos es necesario utilizar un resolver que valide DNSSEC y verificar que la cadena de confianza está correctamente configurada.
+
+Además, el dominio `empresa.local` se utiliza en esta práctica como dominio de laboratorio. No dispone de una delegación pública desde la raíz DNS, por lo que las pruebas realizadas en este entorno no demuestran una cadena de confianza DNSSEC pública.
+
+La configuración de DNSSEC mejora la integridad y autenticidad de los datos DNS, pero no evita por sí sola todos los ataques de denegación de servicio ni oculta las consultas realizadas.
+
+## 7. Conclusión
 
 Con esta práctica he configurado un entorno DNS con un servidor maestro y otro esclavo, restringiendo las transferencias de zona y aplicando una política de firma DNSSEC.
 
 Las comprobaciones de configuración permiten detectar errores de sintaxis, mientras que las consultas con `dig` permiten observar los registros DNS y las firmas RRSIG. La revisión del estado de BIND y del proceso de firma proporciona información adicional sobre el funcionamiento del servicio.
 
 DNSSEC mejora la seguridad del DNS al permitir verificar la autenticidad e integridad de los datos, pero debe configurarse y validarse correctamente. No sustituye otras medidas de seguridad, como el control de acceso, la supervisión de registros, la protección contra ataques de denegación de servicio o el cifrado del tráfico cuando sea necesario.
-
-## 6. Documentación y entrega
-
-Todo el procedimiento queda documentado en este informe. Debajo de cada captura se incluye una explicación de los comandos ejecutados, los resultados esperados y la función de cada medida de seguridad.
-
-**Enlace a la entrega:** [Pega aquí tu enlace de GitBook o Notion]
