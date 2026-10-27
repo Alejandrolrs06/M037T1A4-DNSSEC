@@ -32,3 +32,4 @@ cat /var/lib/bind/db.empresa.local
 sudo named-checkconf
 sudo named-checkzone empresa.local /var/lib/bind/db.empresa.local
 sudo systemctl restart bind9
+
