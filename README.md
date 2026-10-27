@@ -33,3 +33,5 @@ sudo named-checkconf
 sudo named-checkzone empresa.local /var/lib/bind/db.empresa.local
 sudo systemctl restart bind9
 
+img1.png
+https://img1.png/
